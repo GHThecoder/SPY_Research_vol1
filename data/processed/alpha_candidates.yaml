@@ -1,0 +1,13 @@
+alphas:
+- dow
+- hl_range
+- mom_10
+- mom_126
+- mom_21
+- mom_63
+- month
+- ret_lag_1
+meta:
+  method: borda
+  window: selection_2022_2023
+  note: Frozen before final 2024 evaluation; do not re-pick on holdout Sharpe.

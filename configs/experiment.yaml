@@ -1,0 +1,61 @@
+project:
+  name: spy-alpha-research
+  title: "Interpretable Feature Attribution and Alpha Validation for SPY Return Dynamics"
+  seed: 42
+
+paths:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  figures_dir: reports/figures
+  alpha_candidates: data/processed/alpha_candidates.yaml
+
+instrument: SPY
+
+dates:
+  start: "2016-01-01"
+  end: "2024-12-31"              # hard cap — no 2025+
+  train_end: "2021-12-31"        # fit + inner CV
+  selection_start: "2022-01-01"  # attribution / shortlist / model compare
+  selection_end: "2023-12-31"
+  final_start: "2024-01-01"      # one-shot IC / hyp / backtest — never for selection
+  # legacy alias (selection+final exploratory only; do not use for shortlist)
+  test_start: "2022-01-01"
+
+download:
+  auto_adjust: false
+  progress: false
+
+target:
+  horizon: 1
+  method: log              # log | simple
+  price_col: Adj Close
+
+features:
+  return_lags: [1, 2, 3, 5, 10, 21]
+  momentum_windows: [10, 21, 63, 126]
+  vol_windows: [10, 21, 63]
+  vol_of_vol_window: 63
+  volume_windows: [10, 21]
+  include_calendar: true
+
+scaling:
+  method: expanding        # expanding | rolling
+  min_periods: 63
+  rolling_window: 252
+
+cv:
+  n_splits: 5
+  purge_periods: 5
+  embargo_periods: 5
+
+alpha:
+  top_k: 8
+  consensus_method: borda  # borda | intersect
+  fdr_alpha: 0.05
+  nw_lags: 5
+  n_bootstrap: 1000
+
+statistics:
+  rolling_ic_window: 63          # stability plots only — not primary inference
+  block_bootstrap_size: 21
+  nw_lags_rule: auto             # auto => floor(1.5 * T**(1/3))

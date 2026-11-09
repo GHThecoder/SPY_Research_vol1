@@ -1,0 +1,12 @@
+signal_lag: 1
+position: tanh          # tanh | sign
+costs_bps: 1.0
+equal_weight: true
+periods_per_year: 252
+risk_free_rate: 0.0
+compare_baselines:
+  - arima
+  - tree
+  - pca_ridge
+  - kernel
+  - cnn
