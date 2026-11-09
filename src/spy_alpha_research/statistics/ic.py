@@ -53,10 +53,11 @@ def ic_inference(
     nw_lags: int | str = "auto",
     rolling_window: int = 63,
 ) -> dict[str, float]:
-    """Primary: block-bootstrap IC. Secondary: NW on demeaned product series.
+    """Primary: centered block-bootstrap IC. Secondary: NW on demeaned product series.
 
     Rolling IC is returned for plotting only (mean of rolling series) — do not
-    use rolling-IC NW as a significance claim.
+    use rolling-IC NW as a significance claim. Bootstrap p-values are Hall–Wilson
+    recentered (not naive P*(IC* <= 0)).
     """
     boot = block_bootstrap_ic(
         signal,

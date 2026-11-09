@@ -19,6 +19,7 @@ def compare_signals(
     periods_per_year: int = 252,
     ic_window: int = 63,
     nw_lags: int = 5,
+    return_type: str = "simple",
 ) -> pd.DataFrame:
     rows = []
     for name, sig in signals.items():
@@ -30,6 +31,7 @@ def compare_signals(
             position=position,
             costs_bps=costs_bps,
             periods_per_year=periods_per_year,
+            return_type=return_type,
         )
         rows.append({"signal": name, **ic, **bt.metrics})
     return pd.DataFrame(rows).set_index("signal")

@@ -4,6 +4,8 @@ costs_bps: 1.0
 equal_weight: true
 periods_per_year: 252
 risk_free_rate: 0.0
+# Asset return series type fed into the timing engine (log → simple for PnL)
+return_type: log        # log | simple — must match data/returns construction
 compare_baselines:
   - arima
   - tree

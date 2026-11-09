@@ -49,6 +49,7 @@ def grouped_ablation(
     signal_lag: int = 1,
     position: str = "tanh",
     costs_bps: float = 1.0,
+    return_type: str = "simple",
 ) -> pd.DataFrame:
     """Drop each feature group from the shortlist; report ΔIC and ΔSharpe on eval."""
     names = [n for n in alpha_names if n in features.columns]
@@ -74,6 +75,7 @@ def grouped_ablation(
             signal_lag=signal_lag,
             position=position,
             costs_bps=costs_bps,
+            return_type=return_type,
         )
         return {"ic": ic, "sharpe": bt.metrics["sharpe"], "n_alphas": float(len(use_names))}
 
